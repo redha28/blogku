@@ -130,7 +130,8 @@ You can access the application at http://localhost:3000
 - **PUT /admin/blogs/{id}** - Update a blog post
 - **DELETE /admin/blogs/{id}** - Delete a blog post
 
-For full API documentation, you can access the Swagger UI at [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html) when the backend is running.
+For full API documentation, you can access:
+- **Postman Collection**: [BlogKu API Collection](https://www.postman.co/workspace/My-Workspace~25b50f28-dc7e-4fd2-88a5-21905a54fec1/collection/22450553-d11d4131-db6e-4335-aca3-1b6c97e01892?action=share&creator=22450553)
 
 ## Admin Credentials
 
