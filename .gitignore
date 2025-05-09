@@ -1,0 +1,28 @@
+# Environment files with sensitive data
+.env
+.env.local
+.env.production
+.env.docker
+
+# Logs
+logs/
+*.log
+
+# Build files
+bin/
+dist/
+
+# Temporary files
+tmp/
+.DS_Store
+
+# Uploaded files in development
+public/uploads/*
+!public/uploads/.gitkeep
+
+/frontend/node_modules
+/frontend/.env
+/frontend/.env.local
+/frontend/.next
+/backend/go.sum
+/backend/go.mod
