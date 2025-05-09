@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=blogku
+      - MYSQL_USER=blogku
+      - MYSQL_PASSWORD=blogku
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6380:6379"
+
+  backend:
+    build: ./BackEnd
+    ports:
+      - "8080:8080"
+    environment:
+      - DBUSER=root
+      - DBPASS=password
+      - DBHOST=mysql
+      - DBPORT=3306
+      - DBNAME=blogku
+      - JWT_ISSUER=BLOGKU_JWT_ISSUER
+      - JWT_SECRET=1234_BLOG_KU_PALING_POPULER_1234
+      - RDSHOST=redis
+      - RDSPORT=6379
+      - ADMIN_API_KEY=super-secret-admin-api-key-change-me
+    depends_on:
+      - mysql
+      - redis
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080/api/v1
+      - PORT=3000
+    depends_on:
+      - backend
