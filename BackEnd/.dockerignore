@@ -1,0 +1,50 @@
+# Version control
+.git
+.gitignore
+.github/
+
+# Build files
+/bin
+/dist
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go development
+/vendor
+.env
+# Uncomment below to exclude docker env, but keep .env.docker available for Docker build
+# .env.*
+!.env.example
+!.env.docker
+.idea/
+.vscode/
+
+# Local development and temporary files
+/tmp
+/temp
+*.log
+*.backup
+*.bak
+*~
+.DS_Store
+__debug_bin
+
+# Project specific
+/logs
+/public/uploads/*
+!public/uploads/.gitkeep
+
+# Docker related
+Dockerfile*
+docker-compose*.yml
+.docker/
+.dockerignore
+
+# Documentation (optional, depending on size)
+# README.md
+# docs/

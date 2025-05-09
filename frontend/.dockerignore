@@ -1,0 +1,62 @@
+# Dependencies
+node_modules
+/.pnp
+.pnp.js
+yarn.lock
+package-lock.json
+# Keep the package files as they're copied separately in the Dockerfile
+
+# Testing
+/coverage
+/test
+*.test.js
+*.spec.js
+
+# Next.js build output
+/.next/
+# We don't ignore .next completely because we need it for the production stage
+/out/
+/build
+
+# Debug & logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+logs
+*.log
+
+# Environment files (except examples)
+.env
+.env.*
+!.env.example
+
+# Version control
+.git
+.gitignore
+.github
+
+# IDE specific files
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project
+.DS_Store
+
+# Misc
+README.md
+LICENSE
+.editorconfig
+.eslintrc
+.prettierrc
+jest.config.js
+tsconfig.tsbuildinfo
+
+# Docker related
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Cache directories
+.npm
+.eslintcache

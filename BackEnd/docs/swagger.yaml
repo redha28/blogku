@@ -1,0 +1,262 @@
+basePath: /
+definitions:
+  models.AdminCreate:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  models.AdminLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.AdminResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+  models.BlogListResponse:
+    properties:
+      blogs:
+        items:
+          $ref: '#/definitions/models.BlogResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.BlogResponse:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      image_path:
+        type: string
+      published_at:
+        type: string
+      slug:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://example.com/support
+  description: This is a Blog CMS API server.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://example.com/terms/
+  title: Blog CMS API
+  version: "1.0"
+paths:
+  /admin/blogs:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new blog post with title, content, and image
+      parameters:
+      - description: Blog Title
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: Blog Content
+        in: formData
+        name: content
+        required: true
+        type: string
+      - description: Blog Image
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new blog post
+      tags:
+      - blogs
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate an admin user and return a JWT token
+      parameters:
+      - description: Login Request
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdminLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AdminResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Admin login
+      tags:
+      - auth
+  /auth/admin/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new admin user (requires API key)
+      parameters:
+      - description: Admin Create Request
+        in: body
+        name: adminRequest
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdminCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new admin
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      description: Clear the authentication cookie for the admin user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Admin logout
+      tags:
+      - auth
+  /blogs:
+    get:
+      description: Retrieve all blog posts with pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BlogListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all blog posts
+      tags:
+      - blogs
+  /blogs/{slug}:
+    get:
+      description: Retrieve a single blog post by its slug
+      parameters:
+      - description: Blog Slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BlogResponse'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get a blog post by slug
+      tags:
+      - blogs
+swagger: "2.0"
